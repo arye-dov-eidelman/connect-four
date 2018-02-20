@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+require 'pry'
+require_relative '../lib/connect_four'
+game = ConnectFour.new
+game.play

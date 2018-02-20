@@ -1,13 +1,13 @@
-# OO Tic Tac Toe
+# OO Connect Four
 
 ## Objectives
 
-1. Build a CLI Tic Tac Toe game!
-2. Encapsulate Tic Tac Toe in a `TicTacToe` object.
+1. Build a CLI Connect Four game!
+2. Encapsulate Connect Four in a `ConnectFour` object.
 
 ## Overview
 
-You're going to be building a 2 player CLI version of Tic Tac Toe by building a `TicTacToe` object. The game play will be very similar to other versions of TicTacToe.
+You're going to be building a 2 player CLI version of Connect Four by building a `ConnectFour` object. The game play will be very similar to other versions of ConnectFour.
 
 <iframe width="100%" height="100%" src="https://www.youtube.com/embed/e4TMZ0f6qoI" frameborder="0" allowfullscreen></iframe>
 
@@ -23,11 +23,11 @@ You're going to be building a 2 player CLI version of Tic Tac Toe by building a 
 ├── README.md
 ├── Rakefile
 ├── bin
-│   └── tictactoe
+│   └── connectfour
 ├── lib
-│   └── tic_tac_toe.rb
+│   └── connect_four.rb
 └── spec
-    ├── 01_tic_tac_toe_spec.rb
+    ├── 01_connect_four_spec.rb
     ├── 02_play_spec.rb
     ├── 03_cli_spec.rb
     └── spec_helper.rb
@@ -37,23 +37,23 @@ You're going to be building a 2 player CLI version of Tic Tac Toe by building a 
 
 These files set up some tools and gems for our project and can mostly be ignored. Make sure to run `bundle` before starting this project so that you have all the required gems.
 
-#### `bin/tictactoe`
+#### `bin/connectfour`
 
 This is our main executable and will be how we run our game.
 
-#### `lib/tic_tac_toe.rb`
+#### `lib/connect_four.rb`
 
-Our main `TicTacToe` class will be defined here with all the data and logic required to play a game of tic tac toe via instances of `TicTacToe`.
+Our main `ConnectFour` class will be defined here with all the data and logic required to play a game of connect four via instances of `ConnectFour`.
 
 #### `spec`
 
-There are three test files that should be completed in order. `01_tic_tac_toe_spec.rb` sets tests for our helper methods within `TicTacToe`. `02_play_spec.rb` tests the main `#play` method. `03_cli_spec.rb` tests the CLI.
+There are three test files that should be completed in order. `01_connect_four_spec.rb` sets tests for our helper methods within `ConnectFour`. `02_play_spec.rb` tests the main `#play` method. `03_cli_spec.rb` tests the CLI.
 
-### Your Object Oriented Tic Tac Toe
+### Your Object Oriented Connect Four
 
-We're going to be building a very well encapsulated object for Tic Tac Toe where each instance method will represent a discrete, single responsibility or functionality of a Tic Tac Toe game.
+We're going to be building a very well encapsulated object for Connect Four where each instance method will represent a discrete, single responsibility or functionality of a Connect Four game.
 
-We'll be following the Tic Tac Toe conventions of representing the board as an array with 9 elements where `" "` represents an empty cell in the board.
+We'll be following the Connect Four conventions of representing the board as an array with 9 elements where `" "` represents an empty cell in the board.
 
 We'll be getting user input via `gets` and a player will choose a position by entering 1-9. Our program will then fill out the appropriate position on the board with the player's token.
 
@@ -61,26 +61,26 @@ We will keep track of which player's turn it is and how many turns have been pla
 
 ## Instructions
 
-### `TicTacToe` class.
+### `ConnectFour` class.
 
-Open up `lib/tic_tac_toe.rb`. You'll be defining the main game class, `TicTacToe` in `lib/tic_tac_toe.rb`. Without that file defining a `TicTacToe` class, everything will break.
+Open up `lib/connect_four.rb`. You'll be defining the main game class, `ConnectFour` in `lib/connect_four.rb`. Without that file defining a `ConnectFour` class, everything will break.
 
 Every method you build will be encapsulated by this class.
 
 ### `#initialize` and `@board`
 
-The first test in `01_tic_tac_toe_spec.rb` will ensure the requirement that when a new game of Tic Tac Toe is started — that is, when a new instance of `TicTacToe` is initialized — the instance of the game must set the starting state of the board, an array with 9 `" "` empty strings, within an instance variable named `@board`.
+The first test in `01_connect_four_spec.rb` will ensure the requirement that when a new game of Connect Four is started — that is, when a new instance of `ConnectFour` is initialized — the instance of the game must set the starting state of the board, an array with 9 `" "` empty strings, within an instance variable named `@board`.
 
 In other words, your `#initialize` method should set a `@board` variable equal to a new, empty array that represents the game board.
 
 #### `WIN_COMBINATIONS`
 
-Define a `WIN_COMBINATIONS` constant within the `TicTacToe` class, and set it equal to a nested array filled with the index values for the various winning combinations possible in Tic Tac Toe.
+Define a `WIN_COMBINATIONS` constant within the `ConnectFour` class, and set it equal to a nested array filled with the index values for the various winning combinations possible in Connect Four.
 
-**Top-Tip:** When you see this line, `TicTacToe::WIN_COMBINATIONS`, in the test suite, that means the test suite is accessing the constant `WIN_COMBINATIONS` that was declared inside the `TicTacToe` class.
+**Top-Tip:** When you see this line, `ConnectFour::WIN_COMBINATIONS`, in the test suite, that means the test suite is accessing the constant `WIN_COMBINATIONS` that was declared inside the `ConnectFour` class.
 
 ```ruby
-# within the body of TicTacToe
+# within the body of ConnectFour
 
 WIN_COMBINATIONS = [
   [0,1,2], # Top row
@@ -88,7 +88,7 @@ WIN_COMBINATIONS = [
   # et cetera, creating a nested array for each win combination
 ]
 
-# the rest of the TicTacToe class definition
+# the rest of the ConnectFour class definition
 ```
 **Tip:** The next bunch of methods we will be describing have already been defined in previous labs. You can copy your code from those labs, paste them in this one, and tweak them slightly to work with the object oriented approach to pass the tests.
 
@@ -106,7 +106,7 @@ Your `#move` method must take in two arguments: the index in the `@board` array 
 
 #### `#position_taken?`
 
-The `#position_taken?` method will be responsible for evaluating the user's desired move against the Tic Tac Toe board and checking to see whether or not that position is already occupied. Note that this method will be running *after* `#input_to_index`, so it will be checking index values. When it is passed the index value for a prospective move, `#position_taken?` will check to see if that position on the `@board` is vacant or if it contains an `"X"` or an `"O"`. If the position is free, the method should return `false` (i.e., "the position is not taken"); otherwise, it will return `true`.
+The `#position_taken?` method will be responsible for evaluating the user's desired move against the Connect Four board and checking to see whether or not that position is already occupied. Note that this method will be running *after* `#input_to_index`, so it will be checking index values. When it is passed the index value for a prospective move, `#position_taken?` will check to see if that position on the `@board` is vacant or if it contains an `"X"` or an `"O"`. If the position is free, the method should return `false` (i.e., "the position is not taken"); otherwise, it will return `true`.
 
 #### `#valid_move?`
 
@@ -173,7 +173,7 @@ Given a winning `@board`, the `#winner` method should return the token, `"X"` or
 
 #### `#play`
 
-The play method is the main method of the Tic Tac Toe application and is responsible for the game loop. A Tic Tac Toe game must allow players to take turns, checking if the game is over after every turn. At the conclusion of the game, whether because it was won or ended in a draw, the game should report to the user the outcome of the game. You can imagine the pseudocode:
+The play method is the main method of the Connect Four application and is responsible for the game loop. A Connect Four game must allow players to take turns, checking if the game is over after every turn. At the conclusion of the game, whether because it was won or ended in a draw, the game should report to the user the outcome of the game. You can imagine the pseudocode:
 
 ```
 until the game is over
@@ -189,11 +189,11 @@ end
 
 Run the tests for the `#play` method by typing `rspec spec/02_play_spec.rb` in your terminal.
 
-### The CLI: `bin/tictactoe`
+### The CLI: `bin/connectfour`
 
-Your `bin/tictactoe` CLI should:
+Your `bin/connectfour` CLI should:
 
-1. Instantiate an instance of `TicTacToe`
+1. Instantiate an instance of `ConnectFour`
 2. Start the game by calling `#play` on that instance.
 
-<p data-visibility='hidden'>View <a href='https://learn.co/lessons/oo-tic-tac-toe' title='Tic Tac Toe in Ruby'>OO Tic Tac Toe</a> on Learn.co and start learning to code for free.</p>
+<p data-visibility='hidden'>View <a href='https://learn.co/'></a> on Learn.co and start learning to code for free.</p>

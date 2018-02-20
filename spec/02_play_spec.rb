@@ -1,10 +1,10 @@
-require_relative '../lib/tic_tac_toe.rb'
+require_relative '../lib/connect_four.rb'
 
-describe './lib/tic_tac_toe.rb' do
-  describe TicTacToe do
+describe './lib/connect_four.rb' do
+  describe ConnectFour do
     describe '#play' do
       it 'asks for players input on a turn of the game' do
-        game = TicTacToe.new
+        game = ConnectFour.new
         allow($stdout).to receive(:puts)
         allow(game).to receive(:over?).and_return(false, true)
 
@@ -14,7 +14,7 @@ describe './lib/tic_tac_toe.rb' do
       end
 
       it 'checks if the game is over after every turn' do
-        game = TicTacToe.new
+        game = ConnectFour.new
         allow($stdout).to receive(:puts)
         allow(game).to receive(:gets).and_return("1", "2", "3")
 
@@ -24,7 +24,7 @@ describe './lib/tic_tac_toe.rb' do
       end
 
       it 'plays the first turn of the game' do
-        game = TicTacToe.new
+        game = ConnectFour.new
         allow($stdout).to receive(:puts)
         allow(game).to receive(:gets).and_return("1")
 
@@ -36,7 +36,7 @@ describe './lib/tic_tac_toe.rb' do
       end
 
       it 'plays the first few turns of the game' do
-        game = TicTacToe.new
+        game = ConnectFour.new
 
         allow($stdout).to receive(:puts)
         allow(game).to receive(:gets).and_return("1","2","3")
@@ -49,7 +49,7 @@ describe './lib/tic_tac_toe.rb' do
       end
 
       it 'checks if the game is won after every turn' do
-        game = TicTacToe.new
+        game = ConnectFour.new
         allow($stdout).to receive(:puts)
         allow(game).to receive(:gets).and_return("1", "2", "3")
         allow(game).to receive(:winner).and_return("X")
@@ -60,7 +60,7 @@ describe './lib/tic_tac_toe.rb' do
       end
 
       it 'checks if the game is draw after every turn' do
-        game = TicTacToe.new
+        game = ConnectFour.new
         allow($stdout).to receive(:puts)
         allow(game).to receive(:gets).and_return("1", "2", "3")
 
@@ -70,7 +70,7 @@ describe './lib/tic_tac_toe.rb' do
       end
 
       it 'stops playing if someone has won' do
-        game = TicTacToe.new
+        game = ConnectFour.new
         board = ["X", "X", "X", " ", " ", " ", " ", " ", " "]
         game.instance_variable_set(:@board, board)
 
@@ -82,7 +82,7 @@ describe './lib/tic_tac_toe.rb' do
       end
 
       it 'congratulates the winner X' do
-        game = TicTacToe.new
+        game = ConnectFour.new
         board = ["X", "X", "X", " ", " ", " ", " ", " ", " "]
         game.instance_variable_set(:@board, board)
         allow($stdout).to receive(:puts)
@@ -93,7 +93,7 @@ describe './lib/tic_tac_toe.rb' do
       end
 
       it 'congratulates the winner O' do
-        game = TicTacToe.new
+        game = ConnectFour.new
         board = [" ", " ", " ", " ", " ", " ", "O", "O", "O"]
         game.instance_variable_set(:@board, board)
 
@@ -105,7 +105,7 @@ describe './lib/tic_tac_toe.rb' do
       end
 
       it 'stops playing in a draw' do
-        game = TicTacToe.new
+        game = ConnectFour.new
         board = ["X", "O", "X", "O", "X", "X", "O", "X", "O"]
         game.instance_variable_set(:@board, board)
         allow($stdout).to receive(:puts)
@@ -116,7 +116,7 @@ describe './lib/tic_tac_toe.rb' do
       end
 
       it 'prints "Cat\'s Game!" on a draw' do
-        game = TicTacToe.new
+        game = ConnectFour.new
         board = ["X", "O", "X", "O", "X", "X", "O", "X", "O"]
         game.instance_variable_set(:@board, board)
         allow($stdout).to receive(:puts)
@@ -127,7 +127,7 @@ describe './lib/tic_tac_toe.rb' do
       end
 
       it 'plays through an entire game' do
-        game = TicTacToe.new
+        game = ConnectFour.new
         allow($stdout).to receive(:puts)
 
         expect(game).to receive(:gets).and_return("1")

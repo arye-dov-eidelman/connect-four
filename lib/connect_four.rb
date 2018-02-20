@@ -1,4 +1,4 @@
-class TicTacToe
+class ConnectFour
   # attr_accessor :WIN_COMBINATIONS
   attr_reader :board, :WIN_COMBINATIONS
   WIN_COMBINATIONS = [
@@ -12,7 +12,7 @@ class TicTacToe
   def display_board()
     if turn_count == 0
       puts ""
-      puts "Welcome to Tic Tac Toe!"
+      puts "Welcome to Connect Four!"
       puts ""
       puts " 1 | 2 | 3 "
       puts "-----------"
