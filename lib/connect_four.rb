@@ -42,7 +42,15 @@ class ConnectFour
     user_input.to_i - 1
   end
   def move(index, current_player)
-    @board[index] = current_player
+    i = 5 # the height of the board starting from 0 
+    loop do
+      if @board[i][index] == 0
+        @board[i][index] = current_player
+        break
+      else
+        i -= 1
+      end
+    end
   end
   def position_taken?(index)
     !(@board[index].nil? || board[index] == " ")

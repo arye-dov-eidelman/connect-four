@@ -96,35 +96,47 @@ describe './lib/connect_four.rb' do
       end
     end
 
-    # describe '#input_to_index' do
-    #   it "accepts the user's input (a string) as an argument" do
-    #     game = ConnectFour.new
-    #     expect{game.input_to_index}.to raise_error(ArgumentError)
-    #   end
+    describe '#input_to_index' do
+      it "accepts the user's input (a string) as an argument" do
+        game = ConnectFour.new
+        expect{game.input_to_index}.to raise_error(ArgumentError)
+      end
 
-    #   it "converts the user's input (a string) into an integer" do
-    #     game = ConnectFour.new
-    #     expect(game.input_to_index("1")).to be_an(Integer)
-    #   end
+      it "converts the user's input (a string) into an integer" do
+        game = ConnectFour.new
+        expect(game.input_to_index("1")).to be_an(Integer)
+      end
 
-    #   it "converts the user's input from the user-friendly format (on a 1-9 scale) to the array-friendly format (where the first index starts at 0)" do
-    #     game = ConnectFour.new
-    #     expect(game.input_to_index("1")).to eq(0)
-    #     expect(game.input_to_index("5")).to eq(4)
-    #   end
-    # end
+      it "converts the user's input from the user-friendly format (on a 1-9 scale) to the array-friendly format (where the first index starts at 0)" do
+        game = ConnectFour.new
+        expect(game.input_to_index("1")).to eq(0)
+        expect(game.input_to_index("5")).to eq(4)
+      end
+    end
 
-    # describe '#move' do
-    #   it 'allows "X" player in the top left and "O" in the middle' do
-    #     game = ConnectFour.new
-    #     game.move(0, "X")
-    #     game.move(4, "O")
+    describe '#move' do
+      it 'adds peices to the board in the lowest open spot in the specified column' do
+        game = ConnectFour.new
+        
+        game.move(4, 1)
+        game.move(4, 2)
+        game.move(3, 2)
+        game.move(4, 1)
+        game.move(4, 2)
+        game.move(3, 1)
 
-    #     board = game.instance_variable_get(:@board)
+        board = game.instance_variable_get(:@board)
 
-    #     expect(board).to eq(["X", " ", " ", " ", "O", " ", " ", " ", " "])
-    #   end
-    # end
+        expect(board).to eq([
+          [0,0,0,0,0,0,0], 
+          [0,0,0,0,0,0,0], 
+          [0,0,0,0,2,0,0], 
+          [0,0,0,0,1,0,0], 
+          [0,0,0,1,2,0,0], 
+          [0,0,0,2,1,0,0]
+        ])
+      end      
+    end
 
     # describe '#position_taken?' do
     #   it 'returns true/false based on whether the position on the board is already occupied' do
