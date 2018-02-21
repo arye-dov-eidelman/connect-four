@@ -21,23 +21,24 @@ describe './lib/connect_four.rb' do
       end
     end
 
-    # describe 'WIN_COMBINATIONS' do
-    #   it 'defines a constant WIN_COMBINATIONS with arrays for each win combination' do
-    #     expect(ConnectFour::WIN_COMBINATIONS.size).to eq(8)
-
-    #     expect(ConnectFour::WIN_COMBINATIONS).to include_array([0,1,2])
-    #     expect(ConnectFour::WIN_COMBINATIONS).to include_array([3,4,5])
-    #     expect(ConnectFour::WIN_COMBINATIONS).to include_array([6,7,8])
-    #     expect(ConnectFour::WIN_COMBINATIONS).to include_array([0,3,6])
-    #     expect(ConnectFour::WIN_COMBINATIONS).to include_array([1,4,7])
-    #     expect(ConnectFour::WIN_COMBINATIONS).to include_array([2,5,8])
-    #     expect(ConnectFour::WIN_COMBINATIONS).to include_array([0,4,8])
-    #     expect(ConnectFour::WIN_COMBINATIONS).to include_array([6,4,2])
-    #   end
-    # end
+    describe '#colorize' do
+      it "accepts the user's input (a color code and a string) as an argument" do
+        game = ConnectFour.new
+        expect{game.colorize}.to raise_error(ArgumentError)
+        expect{game.colorize("34")}.to raise_error(ArgumentError)
+        expect{game.colorize('a string')}.to raise_error(ArgumentError)
+      end
+    
+      it "colors the text of the input string with the color code of the color" do
+        game = ConnectFour.new
+        expect(game.colorize("text", "1")).to eq("\e[1mtext\e[0m")
+        expect(game.colorize("other text", "34")).to eq("\e[34mother text\e[0m")
+        expect(game.colorize(",text,", "55")).to eq("\e[55m,text,\e[0m")
+      end
+    end
 
     describe '#display_board' do
-      it 'prints arbitrary arrangements of the board' do
+      it 'prints an empty board' do
         board = [
           [0,0,0,0,0,0,0], 
           [0,0,0,0,0,0,0], 
@@ -51,20 +52,21 @@ describe './lib/connect_four.rb' do
 
         output = capture_puts{ game.display_board }
 
-        expect(output).to include("+-+-+-+-+-+-+-+")
-        expect(output).to include("|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|")
-        expect(output).to include("+-+-+-+-+-+-+-+")
-        expect(output).to include("|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|")
-        expect(output).to include("+-+-+-+-+-+-+-+")
-        expect(output).to include("|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|")
-        expect(output).to include("+-+-+-+-+-+-+-+")
-        expect(output).to include("|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|")
-        expect(output).to include("+-+-+-+-+-+-+-+")
-        expect(output).to include("|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|")
-        expect(output).to include("+-+-+-+-+-+-+-+")
-        expect(output).to include("|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|")
-        expect(output).to include("+-+-+-+-+-+-+-+")
-
+        expect(output).to include("+---+---+---+---+---+---+---+")
+        expect(output).to include("| ● | ● | ● | ● | ● | ● | ● |")
+        expect(output).to include("+---+---+---+---+---+---+---+")
+        expect(output).to include("| ● | ● | ● | ● | ● | ● | ● |")
+        expect(output).to include("+---+---+---+---+---+---+---+")
+        expect(output).to include("| ● | ● | ● | ● | ● | ● | ● |")
+        expect(output).to include("+---+---+---+---+---+---+---+")
+        expect(output).to include("| ● | ● | ● | ● | ● | ● | ● |")
+        expect(output).to include("+---+---+---+---+---+---+---+")
+        expect(output).to include("| ● | ● | ● | ● | ● | ● | ● |")
+        expect(output).to include("+---+---+---+---+---+---+---+")
+        expect(output).to include("| ● | ● | ● | ● | ● | ● | ● |")
+        expect(output).to include("+---+---+---+---+---+---+---+")
+      end
+      it 'prints arbitrary arrangements of the board' do
         board = [
           [0,0,0,0,0,0,1], 
           [0,5,0,0,0,1,2], 
@@ -73,23 +75,24 @@ describe './lib/connect_four.rb' do
           [1,0,0,0,0,2,1], 
           [1,0,2,0,0,2,1]
         ]
+        game = ConnectFour.new
         game.instance_variable_set(:@board, board)
 
         output = capture_puts{ game.display_board }
 
-        expect(output).to include("+-+-+-+-+-+-+-+")
-        expect(output).to include("|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\e[34m\u25CF|")
-        expect(output).to include("+-+-+-+-+-+-+-+")
-        expect(output).to include("|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\e[34m\u25CF|\e[31m\u25CF|")
-        expect(output).to include("+-+-+-+-+-+-+-+")
-        expect(output).to include("|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\e[31m\u25CF|\e[34m\u25CF|")
-        expect(output).to include("+-+-+-+-+-+-+-+")
-        expect(output).to include("|\e[34m\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\e[34m\u25CF|\e[31m\u25CF|")
-        expect(output).to include("+-+-+-+-+-+-+-+")
-        expect(output).to include("|\e[34m\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\e[31m\u25CF|\e[34m\u25CF|")
-        expect(output).to include("+-+-+-+-+-+-+-+")
-        expect(output).to include("|\e[34m\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\e[31m\u25CF|\e[34m\u25CF|")
-        expect(output).to include("+-+-+-+-+-+-+-+")
+        expect(output).to include("+---+---+---+---+---+---+---+")
+        expect(output).to include("| ● | ● | ● | ● | ● | ● | \e[31m●\e[0m |")
+        expect(output).to include("+---+---+---+---+---+---+---+")
+        expect(output).to include("| ● | ● | ● | ● | ● | \e[31m●\e[0m | \e[34m●\e[0m |")
+        expect(output).to include("+---+---+---+---+---+---+---+")
+        expect(output).to include("| ● | ● | ● | ● | ● | \e[34m●\e[0m | \e[31m●\e[0m |")
+        expect(output).to include("+---+---+---+---+---+---+---+")
+        expect(output).to include("| \e[31m●\e[0m | ● | ● | ● | ● | \e[31m●\e[0m | \e[34m●\e[0m |")
+        expect(output).to include("+---+---+---+---+---+---+---+")
+        expect(output).to include("| \e[31m●\e[0m | ● | ● | ● | ● | \e[34m●\e[0m | \e[31m●\e[0m |")
+        expect(output).to include("+---+---+---+---+---+---+---+")
+        expect(output).to include("| \e[31m●\e[0m | ● | ● | ● | ● | \e[34m●\e[0m | \e[31m●\e[0m |")
+        expect(output).to include("+---+---+---+---+---+---+---+")
       end
     end
 

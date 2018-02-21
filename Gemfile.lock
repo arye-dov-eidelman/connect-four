@@ -25,10 +25,11 @@ GEM
 
 PLATFORMS
   ruby
+  x64-mingw32
 
 DEPENDENCIES
   pry
   rspec
 
 BUNDLED WITH
-   1.13.6
+   1.16.1

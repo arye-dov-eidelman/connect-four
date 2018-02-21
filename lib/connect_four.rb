@@ -1,11 +1,10 @@
 class ConnectFour
-  # attr_accessor :WIN_COMBINATIONS
-  attr_reader :board, :WIN_COMBINATIONS
-  WIN_COMBINATIONS = [
-    [0,1,2], [3,4,5], [6,7,8],
-    [0,3,6], [1,4,7], [2,5,8],
-    [0,4,8], [2,4,6]
-  ]
+  #attr_accessor 
+  attr_reader :board, :RED, :BLUE, :GREY
+
+  @@RED = "31"
+  @@BLUE = "34"
+  @@GREY = "37"
   def initialize
     @board = [
       [0,0,0,0,0,0,0], 
@@ -16,23 +15,28 @@ class ConnectFour
       [0,0,0,0,0,0,0]
     ]
   end
+  def colorize(string, color)
+    # return "\e[" + color + "m" + string + "\e[0m" 
+    # return `\e[#{color}m#{string}\e[0m`
+    return "\e[#{color}m#{string}\e[0m"
+  end
   def display_board()
-    if turn_count == 0
-      puts ""
-      puts "Welcome to Connect Four!"
-      puts ""
-      puts " 1 | 2 | 3 "
-      puts "-----------"
-      puts " 4 | 5 | 6 "
-      puts "-----------"
-      puts " 7 | 8 | 9 "
-      return
+    @board.each do |row|
+      puts "+---+---+---+---+---+---+---+"
+      print '|'
+      row.each do |cell|
+        case cell
+          when 1
+            print " " + colorize("●", @@RED) + " |"
+          when 2
+            print " " + colorize("●", @@BLUE) + " |"
+          else
+            print " ● |"
+        end
+      end
+      puts ''
     end
-    puts " #{@board[0]} | #{@board[1]} | #{@board[2]} "
-    puts "----------"
-    puts " #{@board[3]} | #{@board[4]} | #{@board[5]} "
-    puts "-----------"
-    puts " #{@board[6]} | #{@board[7]} | #{@board[8]} "
+    puts "+---+---+---+---+---+---+---+"
   end
   def input_to_index(user_input)
     user_input.to_i - 1
@@ -75,24 +79,24 @@ class ConnectFour
     end
   end
   def won?
-    WIN_COMBINATIONS.each do |win_combination|
-      position = [@board[win_combination[0]], @board[win_combination[1]], @board[win_combination[2]]]
-      if position[0] == "X" && position[1] == "X" && position[2] == "X"
-        return win_combination
-      end
-      if position[0] == "O" && position[1] == "O" && position[2] == "O"
-        return win_combination
-      end
-    end
+    # WIN_COMBINATIONS.each do |win_combination|
+    #   position = [@board[win_combination[0]], @board[win_combination[1]], @board[win_combination[2]]]
+    #   if position[0] == "X" && position[1] == "X" && position[2] == "X"
+    #     return win_combination
+    #   end
+    #   if position[0] == "O" && position[1] == "O" && position[2] == "O"
+    #     return win_combination
+    #   end
+    # end
     return false
   end
   def full?
-    @board.each do |position|
-      if position == " "
+    # @board.each do |position|
+    #   if position == " "
         return false
-      end
-    end
-    return true
+    #   end
+    # end
+    # return true
   end
   def draw?
     if full? && !won?
