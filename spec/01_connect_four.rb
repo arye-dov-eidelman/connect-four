@@ -3,13 +3,20 @@ require_relative '../lib/connect_four.rb'
 describe './lib/connect_four.rb' do
   describe ConnectFour do
     describe '#initialize' do
-      it 'assigns an instance variable @board to an array with 7 arrays of 6 unfilled spots (represented as 0)' do
+      it 'assigns an instance variable @board to an array with 6 arrays of 7 unfilled spots' do
+          # 0 = an empty spot; 1 = player 1 (red); 2 = player 2 (blue)
+          # board[0][0] is the top left cell board[0][1] is the cell to its right
+          # board[row][column]
         game = ConnectFour.new
         expect(game.instance_variable_get(:@board)).to eq(
-          # 0 = an empty spot; 1 = player 1; 2 = player 2
-          # board[0][0] is the bottum left cell board[0][1] is the cell ontop of that
-          # board[1][0] is the bottum cell on the second column from the left etc.
-          [[0,0,0,0,0,0], [0,0,0,0,0,0], [0,0,0,0,0,0], [0,0,0,0,0,0], [0,0,0,0,0,0], [0,0,0,0,0,0], [0,0,0,0,0,0]]
+          [
+            [0,0,0,0,0,0,0], 
+            [0,0,0,0,0,0,0], 
+            [0,0,0,0,0,0,0], 
+            [0,0,0,0,0,0,0], 
+            [0,0,0,0,0,0,0], 
+            [0,0,0,0,0,0,0]
+          ]
         )
       end
     end
@@ -29,33 +36,62 @@ describe './lib/connect_four.rb' do
     #   end
     # end
 
-    # describe '#display_board' do
-    #   it 'prints arbitrary arrangements of the board' do
-    #     board = ["X", "X", "X", "X", "O", "O", "X", "O", "O"]
-    #     game = ConnectFour.new
-    #     game.instance_variable_set(:@board, board)
+    describe '#display_board' do
+      it 'prints arbitrary arrangements of the board' do
+        board = [
+          [0,0,0,0,0,0,0], 
+          [0,0,0,0,0,0,0], 
+          [0,0,0,0,0,0,0], 
+          [0,0,0,0,0,0,0], 
+          [0,0,0,0,0,0,0], 
+          [0,0,0,0,0,0,0]
+        ]
+        game = ConnectFour.new
+        game.instance_variable_set(:@board, board)
 
-    #     output = capture_puts{ game.display_board }
+        output = capture_puts{ game.display_board }
 
-    #     expect(output).to include(" X | X | X ")
-    #     expect(output).to include("-----------")
-    #     expect(output).to include(" X | O | O ")
-    #     expect(output).to include("-----------")
-    #     expect(output).to include(" X | O | O ")
+        expect(output).to include("+-+-+-+-+-+-+-+")
+        expect(output).to include("|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|")
+        expect(output).to include("+-+-+-+-+-+-+-+")
+        expect(output).to include("|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|")
+        expect(output).to include("+-+-+-+-+-+-+-+")
+        expect(output).to include("|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|")
+        expect(output).to include("+-+-+-+-+-+-+-+")
+        expect(output).to include("|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|")
+        expect(output).to include("+-+-+-+-+-+-+-+")
+        expect(output).to include("|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|")
+        expect(output).to include("+-+-+-+-+-+-+-+")
+        expect(output).to include("|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|")
+        expect(output).to include("+-+-+-+-+-+-+-+")
 
+        board = [
+          [0,0,0,0,0,0,1], 
+          [0,5,0,0,0,1,2], 
+          [0,0,0,0,0,2,1], 
+          [1,0,0,0,0,1,2], 
+          [1,0,0,0,0,2,1], 
+          [1,0,2,0,0,2,1]
+        ]
+        game.instance_variable_set(:@board, board)
 
-    #     board = ["X", "O", "X", "O", "X", "X", "O", "X", "O"]
-    #     game.instance_variable_set(:@board, board)
+        output = capture_puts{ game.display_board }
 
-    #     output = capture_puts{ game.display_board }
-
-    #     expect(output).to include(" X | O | X ")
-    #     expect(output).to include("-----------")
-    #     expect(output).to include(" O | X | X ")
-    #     expect(output).to include("-----------")
-    #     expect(output).to include(" O | X | O ")
-    #   end
-    # end
+        expect(output).to include("+-+-+-+-+-+-+-+")
+        expect(output).to include("|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\e[34m\u25CF|")
+        expect(output).to include("+-+-+-+-+-+-+-+")
+        expect(output).to include("|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\e[34m\u25CF|\e[31m\u25CF|")
+        expect(output).to include("+-+-+-+-+-+-+-+")
+        expect(output).to include("|\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\e[31m\u25CF|\e[34m\u25CF|")
+        expect(output).to include("+-+-+-+-+-+-+-+")
+        expect(output).to include("|\e[34m\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\e[34m\u25CF|\e[31m\u25CF|")
+        expect(output).to include("+-+-+-+-+-+-+-+")
+        expect(output).to include("|\e[34m\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\e[31m\u25CF|\e[34m\u25CF|")
+        expect(output).to include("+-+-+-+-+-+-+-+")
+        expect(output).to include("|\e[34m\u25CF|\u25CF|\u25CF|\u25CF|\u25CF|\e[31m\u25CF|\e[34m\u25CF|")
+        expect(output).to include("+-+-+-+-+-+-+-+")
+      end
+    end
 
     # describe '#input_to_index' do
     #   it "accepts the user's input (a string) as an argument" do
