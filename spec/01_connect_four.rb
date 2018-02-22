@@ -114,6 +114,19 @@ describe './lib/connect_four.rb' do
       end
     end
 
+    describe '#player_number_to_color' do
+      it "accepts a players value (1 or 2) as an argument" do
+        game = ConnectFour.new
+        expect{game.player_number_to_color}.to raise_error(ArgumentError)
+      end
+
+      it "converts the players value (an integer) into a string" do
+        game = ConnectFour.new
+        expect(game.player_number_to_color(1)).to eq('Red')
+        expect(game.player_number_to_color(2)).to eq('Blue')
+      end
+    end
+
     describe '#move' do
       it 'adds peices to the board in the lowest open spot in the specified column' do
         game = ConnectFour.new
@@ -269,12 +282,13 @@ describe './lib/connect_four.rb' do
         game.turn
       end
 
-      it "calls #input_to_index, #valid_move?, and #current_player" do
+      it "calls #input_to_index, #valid_move?, #current_player (twice), and #player_number_to_color" do
         allow($stdout).to receive(:puts)
         expect(game).to receive(:gets).and_return("5")
         expect(game).to receive(:input_to_index).and_return(4)
         expect(game).to receive(:valid_move?).and_return(true)
-        expect(game).to receive(:current_player).and_return(1)
+        expect(game).to receive(:current_player).twice.and_return(1)
+        expect(game).to receive(:player_number_to_color).and_return('Red')
 
         game.turn
       end
@@ -308,23 +322,37 @@ describe './lib/connect_four.rb' do
       end
     end
 
-    # describe "#won?" do
-    #   it 'returns false for a draw' do
-    #     game = ConnectFour.new
-    #     board = ["X", "O", "X", "O", "X", "X", "O", "X", "O"]
-    #     game.instance_variable_set(:@board, board)
+    describe "#won?" do
+      it 'returns false for a draw' do
+        game = ConnectFour.new
+        board = [
+          [1,2,1,2,1,2,1],
+          [1,2,1,2,1,2,1],
+          [2,1,2,1,2,1,2],
+          [2,1,2,1,2,1,2],
+          [1,2,1,2,1,2,1],
+          [1,2,1,2,1,2,1]
+        ]
+        game.instance_variable_set(:@board, board)
 
-    #     expect(game.won?).to be_falsey
-    #   end
+        expect(game.won?).to be_falsey
+      end
 
-    #   it 'returns the winning combo for a win' do
-    #     game = ConnectFour.new
-    #     board = ["X", "O", "X", "O", "X", "O", "O", "X", "X"]
-    #     game.instance_variable_set(:@board, board)
+      it 'returns the winning combo for a win' do
+        game = ConnectFour.new
+        board = [
+          [1,2,2,2,1,0,1],
+          [1,2,1,2,1,0,1],
+          [2,1,2,1,2,1,2],
+          [2,1,2,1,2,2,2],
+          [1,2,1,2,1,2,1],
+          [1,2,1,2,1,2,1]
+        ]
+        game.instance_variable_set(:@board, board)
 
-    #     expect(game.won?).to contain_exactly(0,4,8)
-    #   end
-    # end
+        expect(game.won?).to contain_exactly([0,2], [1,3], [2,4], [3,5])
+      end
+    end
 
     describe '#full?' do
       it 'returns true for a draw' do
@@ -405,56 +433,98 @@ describe './lib/connect_four.rb' do
       end
     end
 
-    # describe '#over?' do
-    #   it 'returns true for a draw' do
-    #     game = ConnectFour.new
-    #     board = ["X", "O", "X", "O", "X", "X", "O", "X", "O"]
-    #     game.instance_variable_set(:@board, board)
+    describe '#over?' do
+      it 'returns true for a draw' do
+        game = ConnectFour.new
+        board = [
+          [1,2,1,2,1,2,1],
+          [1,2,1,2,1,2,1],
+          [2,1,2,1,2,1,2],
+          [2,1,2,1,2,1,2],
+          [1,2,1,2,1,2,1],
+          [1,2,1,2,1,2,1]
+        ]
+        game.instance_variable_set(:@board, board)
 
-    #     expect(game.over?).to be_truthy
-    #   end
+        expect(game.over?).to be_truthy
+      end
 
-    #   it 'returns true for a won game' do
-    #     game = ConnectFour.new
-    #     board = ["X", "O", "X", "O", "X", "X", "O", "O", "X"]
-    #     game.instance_variable_set(:@board, board)
+      it 'returns false for a won game' do
+        game = ConnectFour.new
+        board = [
+          [1,2,1,2,1,2,1],
+          [1,2,1,1,2,2,1],
+          [1,2,1,1,2,2,1],
+          [2,1,2,2,1,1,2],
+          [1,2,1,1,2,2,1],
+          [1,2,1,1,2,2,1]
+        ]
+        game.instance_variable_set(:@board, board)
 
-    #     expect(game.over?).to be_truthy
-    #   end
+        expect(game.over?).to be_truthy
+      end
 
-    #   it 'returns false for an in-progress game' do
-    #     game = ConnectFour.new
-    #     board = ["X", " ", "X", " ", "X", " ", "O", "O", " "]
-    #     game.instance_variable_set(:@board, board)
+      it 'returns false for an in-progress game' do
+        game = ConnectFour.new
+        board = [
+          [1,2,1,0,0,0,1],
+          [1,2,1,1,2,2,1],
+          [1,2,1,1,2,2,1],
+          [2,1,2,2,1,1,2],
+          [1,2,1,1,2,2,1],
+          [1,2,1,1,2,2,1]
+        ]
+        game.instance_variable_set(:@board, board)
 
-    #     expect(game.over?).to be_falsey
-    #   end
-    # end
+        expect(game.over?).to be_falsey
+      end
+    end
 
-    # describe '#winner' do
-    #   it 'return X when X won' do
-    #     game = ConnectFour.new
-    #     board = ["X", " ", " ", " ", "X", " ", " ", " ", "X"]
-    #     game.instance_variable_set(:@board, board)
+    describe '#winner' do
+      it 'return red when 1 won' do
+        game = ConnectFour.new
+        board = [
+          [0,2,1,1,1,2,1],
+          [0,2,1,2,1,2,1],
+          [2,1,2,1,2,1,2],
+          [2,1,2,1,2,1,1],
+          [1,2,1,2,1,2,1],
+          [1,2,1,2,1,2,1]
+        ]
+        game.instance_variable_set(:@board, board)
 
-    #     expect(game.winner).to eq("X")
-    #   end
+        expect(game.winner).to eq("X")
+      end
 
-    #   it 'returns O when O won' do
-    #     game = ConnectFour.new
-    #     board = ["X", "O", " ", " ", "O", " ", " ", "O", "X"]
-    #     game.instance_variable_set(:@board, board)
+      it 'returns blue when 2 won' do
+        game = ConnectFour.new
+        board = [
+          [1,2,2,2,1,0,1],
+          [1,2,1,2,1,0,1],
+          [2,1,2,1,2,1,2],
+          [2,1,2,1,2,2,2],
+          [1,2,1,2,1,2,1],
+          [1,2,1,2,1,2,1]
+        ]
+        game.instance_variable_set(:@board, board)
 
-    #     expect(game.winner).to eq("O")
-    #   end
+        expect(game.winner).to eq("O")
+      end
 
-    #   it 'returns nil when no winner' do
-    #     game = ConnectFour.new
-    #     board = ["X", "O", " ", " ", " ", " ", " ", "O", "X"]
-    #     game.instance_variable_set(:@board, board)
+      it 'returns nil when no winner' do
+        game = ConnectFour.new
+        board = [
+          [1,2,1,2,1,2,1],
+          [1,2,1,2,1,2,1],
+          [2,1,2,1,2,1,2],
+          [2,1,2,1,2,1,2],
+          [1,2,1,2,1,2,1],
+          [1,2,1,2,1,2,1]
+        ]
+        game.instance_variable_set(:@board, board)
 
-    #     expect(game.winner).to be_nil
-    #   end
-    # end
+        expect(game.winner).to be_nil
+      end
+    end
   end
 end

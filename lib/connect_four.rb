@@ -16,8 +16,6 @@ class ConnectFour
     ]
   end
   def colorize(string, color)
-    # return "\e[" + color + "m" + string + "\e[0m" 
-    # return `\e[#{color}m#{string}\e[0m`
     return "\e[#{color}m#{string}\e[0m"
   end
   def display_board()
@@ -75,9 +73,19 @@ class ConnectFour
     end
     return 2
   end
+  def player_number_to_color(player)
+    if player == 1
+      return 'Red'
+    end
+    if player == 2
+      return 'player_number_to_color invalid number it needs to be 1 or 2'
+    end
+
+  return 'Blue'
+end
   def turn
     puts ""
-    puts "Please enter 1-9:"
+    puts "Its #{player_number_to_color(current_player)}'s turn, Please enter 1-7:"
     index = input_to_index(gets.strip)
     puts ""
     if valid_move?(index)
@@ -123,16 +131,7 @@ class ConnectFour
     return false
   end
   def winner
-    WIN_COMBINATIONS.each do |win_combination|
-      position = [@board[win_combination[0]], @board[win_combination[1]], @board[win_combination[2]]]
-      if position[0] == "X" && position[1] == "X" && position[2] == "X"
-        return "X"
-      end
-      if position[0] == "O" && position[1] == "O" && position[2] == "O"
-        return "O"
-      end
-    end
-    return nil
+    @board[won?[0][0]][won?[0][1]]
   end
   def play
     if turn_count == 0
