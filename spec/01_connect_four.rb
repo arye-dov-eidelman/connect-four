@@ -227,23 +227,37 @@ describe './lib/connect_four.rb' do
       end
     end
 
-    # describe '#current_player' do
-    #   it 'returns the correct player, X, for the third move' do
-    #     game = ConnectFour.new
-    #     board = ["O", " ", " ", " ", "X", " ", " ", " ", " "]
-    #     game.instance_variable_set(:@board, board)
+    describe '#current_player' do
+      it 'returns the correct player, 1, for the third move' do
+        game = ConnectFour.new
+        board = [
+          [0,0,0,0,0,0,0], 
+          [0,0,0,0,0,0,0], 
+          [0,0,0,0,0,0,0], 
+          [0,0,0,0,0,0,0], 
+          [0,0,0,1,0,0,0], 
+          [0,0,0,2,1,0,0]
+        ]
+        game.instance_variable_set(:@board, board)
 
-    #     expect(game.current_player).to eq("X")
-    #   end
+        expect(game.current_player).to eq(2)
+      end
 
-    #   it 'returns the correct player, O, for the fourth move' do
-    #     game = ConnectFour.new
-    #     board = ["O", " ", " ", " ", "X", " ", " ", " ", "X"]
-    #     game.instance_variable_set(:@board, board)
+      it 'returns the correct player, 2, for the fourth move' do
+        game = ConnectFour.new
+        board = [
+          [0,0,0,0,0,0,0], 
+          [0,0,0,0,0,0,0], 
+          [0,0,0,0,0,0,0], 
+          [0,0,0,0,0,0,0], 
+          [0,0,0,1,0,0,0], 
+          [0,0,2,2,1,0,0]
+        ]
+        game.instance_variable_set(:@board, board)
 
-    #     expect(game.current_player).to eq("O")
-    #   end
-    # end
+        expect(game.current_player).to eq(1)
+      end
+    end
 
     # describe '#turn' do
     #   let(:game) { ConnectFour.new }

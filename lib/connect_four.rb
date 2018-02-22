@@ -71,9 +71,9 @@ class ConnectFour
   end
   def current_player
     if turn_count % 2 == 0
-      return 'X'
+      return 1
     end
-    return 'O'
+    return 2
   end
   def turn
     puts ""
