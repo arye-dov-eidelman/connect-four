@@ -392,7 +392,7 @@ describe './lib/connect_four.rb' do
       it 'returns false for an in-progress game' do
         game = ConnectFour.new
         board = [
-          [1,0,1,0,0,0,1],
+          [1,2,1,0,0,0,1],
           [1,2,1,1,2,2,1],
           [1,2,1,1,2,2,1],
           [2,1,2,2,1,1,2],

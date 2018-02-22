@@ -102,7 +102,7 @@ class ConnectFour
   end
   def full?
     @board[0].each do |cell|
-      if @board[0][cell] == 0
+      if cell == 0
         return false
       end
     end
