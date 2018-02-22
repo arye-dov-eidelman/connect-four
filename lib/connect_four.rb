@@ -60,9 +60,11 @@ class ConnectFour
   end
   def turn_count
     result = 0
-    @board.each do |index|
-      if index != " "
-        result+=1
+    @board.each do |row|
+      row.each do |cell|
+        if cell != 0
+          result+=1
+        end
       end
     end
     return result

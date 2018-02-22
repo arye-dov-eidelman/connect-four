@@ -198,20 +198,34 @@ describe './lib/connect_four.rb' do
       end
     end
 
-    # describe '#turn_count' do
-    #   it 'counts occupied positions' do
-    #     game = ConnectFour.new
-    #     board = ["O", " ", " ", " ", "X", " ", " ", " ", "X"]
-    #     game.instance_variable_set(:@board, board)
+    describe '#turn_count' do
+      it 'counts occupied positions' do
+        game = ConnectFour.new
+        board = [
+          [1,0,0,0,1,0,0], 
+          [2,0,0,0,1,0,0], 
+          [2,0,0,0,2,0,0], 
+          [2,0,0,0,1,0,0], 
+          [1,0,0,1,2,0,0], 
+          [2,0,0,2,1,0,0]
+        ]
+        game.instance_variable_set(:@board, board)
 
-    #     expect(game.turn_count).to eq(3)
+        expect(game.turn_count).to eq(14)
 
-    #     board = ["O", " ", "O", " ", "X", " ", " ", " ", "X"]
-    #     game.instance_variable_set(:@board, board)
+        board = [
+          [0,0,0,0,0,0,0], 
+          [0,0,0,0,0,0,0], 
+          [0,0,0,0,2,0,0], 
+          [2,0,0,0,1,0,0], 
+          [1,0,0,1,2,0,0], 
+          [2,0,0,2,1,0,0]
+        ]
+        game.instance_variable_set(:@board, board)
 
-    #     expect(game.turn_count).to eq(4)
-    #   end
-    # end
+        expect(game.turn_count).to eq(9)
+      end
+    end
 
     # describe '#current_player' do
     #   it 'returns the correct player, X, for the third move' do
