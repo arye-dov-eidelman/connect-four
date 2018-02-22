@@ -138,25 +138,32 @@ describe './lib/connect_four.rb' do
       end      
     end
 
-    # describe '#position_taken?' do
-    #   it 'returns true/false based on whether the position on the board is already occupied' do
-    #     game = ConnectFour.new
-    #     board = ["X", " ", " ", " ", " ", " ", " ", " ", "O"]
-    #     game.instance_variable_set(:@board, board)
+    describe '#position_taken?' do
+      it 'returns true/false based on whether the column on the board is already full' do
+        game = ConnectFour.new
+        board = [
+          [1,0,0,0,1,0,0], 
+          [2,0,0,0,1,0,0], 
+          [2,0,0,0,2,0,0], 
+          [2,0,0,0,1,0,0], 
+          [1,0,0,1,2,0,0], 
+          [2,0,0,2,1,0,0]
+        ]
+        game.instance_variable_set(:@board, board)
 
-    #     index = 0
-    #     expect(game.position_taken?(index)).to be(true)
+        index = 0
+        expect(game.position_taken?(index)).to be(true)
 
-    #     index = 8
-    #     expect(game.position_taken?(index)).to be(true)
+        index = 4
+        expect(game.position_taken?(index)).to be(true)
 
-    #     index = 1
-    #     expect(game.position_taken?(index)).to be(false)
+        index = 1
+        expect(game.position_taken?(index)).to be(false)
 
-    #     index = 7
-    #     expect(game.position_taken?(index)).to be(false)
-    #   end
-    # end
+        index = 6
+        expect(game.position_taken?(index)).to be(false)
+      end
+    end
 
     # describe '#valid_move?' do
     #   it 'returns true/false based on whether the position is already occupied' do
