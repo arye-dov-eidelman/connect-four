@@ -53,7 +53,7 @@ class ConnectFour
     end
   end
   def position_taken?(index)
-    !(@board[index].nil? || board[index] == " ")
+    (@board[0][index] != 0)
   end
   def valid_move?(index)
     index.between?(0,8) && !position_taken?(index)
