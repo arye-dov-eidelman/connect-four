@@ -165,25 +165,38 @@ describe './lib/connect_four.rb' do
       end
     end
 
-    # describe '#valid_move?' do
-    #   it 'returns true/false based on whether the position is already occupied' do
-    #     game = ConnectFour.new
-    #     board = [" ", " ", " ", " ", "X", " ", " ", " ", " "]
-    #     game.instance_variable_set(:@board, board)
+    describe '#valid_move?' do
+      it 'returns true/false based on whether the position is already occupied' do
+        game = ConnectFour.new
+        board = [
+          [1,0,0,0,1,0,0], 
+          [2,0,0,0,1,0,0], 
+          [2,0,0,0,2,0,0], 
+          [2,0,0,0,1,0,0], 
+          [1,0,0,1,2,0,0], 
+          [2,0,0,2,1,0,0]
+        ]
+        game.instance_variable_set(:@board, board)
 
-    #     index = 0
-    #     expect(game.valid_move?(index)).to be_truthy
+        index = 0
+        expect(game.valid_move?(index)).to be_falsey
 
-    #     index = 4
-    #     expect(game.valid_move?(index)).to be_falsey
-    #   end
+        index = 4
+        expect(game.valid_move?(index)).to be_falsey
 
-    #   it 'checks that the attempted move is within the bounds of the game board' do
-    #     allow_any_instance_of(ConnectFour).to receive(:position_taken?).and_return(false)
-    #     game = ConnectFour.new
-    #     expect(game.valid_move?(99)).to be_falsey
-    #   end
-    # end
+        index = 2
+        expect(game.valid_move?(index)).to be_truthy
+
+        index = 5
+        expect(game.valid_move?(index)).to be_truthy
+      end
+
+      it 'checks that the attempted move is within the bounds of the game board' do
+        allow_any_instance_of(ConnectFour).to receive(:position_taken?).and_return(false)
+        game = ConnectFour.new
+        expect(game.valid_move?(99)).to be_falsey
+      end
+    end
 
     # describe '#turn_count' do
     #   it 'counts occupied positions' do

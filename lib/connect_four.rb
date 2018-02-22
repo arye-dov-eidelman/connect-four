@@ -53,10 +53,10 @@ class ConnectFour
     end
   end
   def position_taken?(index)
-    (@board[0][index] != 0)
+    @board[0][index] != 0
   end
   def valid_move?(index)
-    index.between?(0,8) && !position_taken?(index)
+    index.between?(0,6) && !position_taken?(index)
   end
   def turn_count
     result = 0
