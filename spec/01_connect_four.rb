@@ -330,7 +330,7 @@ describe './lib/connect_four.rb' do
       it 'returns true for a draw' do
         game = ConnectFour.new
         board = [
-          [1,2,1,1,2,2,1], 
+          [1,2,1,1,2,2,1],
           [1,2,1,1,2,2,1],
           [1,2,1,1,2,2,1],
           [2,1,2,2,1,1,2],
@@ -345,7 +345,7 @@ describe './lib/connect_four.rb' do
       it 'returns false for an in-progress game' do
         game = ConnectFour.new
         board = [
-          [1,0,1,0,0,0,1], 
+          [1,0,1,0,0,0,1],
           [1,2,1,1,2,2,1],
           [1,2,1,1,2,2,1],
           [2,1,2,2,1,1,2],
@@ -358,31 +358,52 @@ describe './lib/connect_four.rb' do
       end
     end
 
-    # describe '#draw?' do
-    #   it 'returns true for a draw' do
-    #     game = ConnectFour.new
-    #     board = ["X", "O", "X", "O", "X", "X", "O", "X", "O"]
-    #     game.instance_variable_set(:@board, board)
+    describe '#draw?' do
+      it 'returns true for a draw' do
+        game = ConnectFour.new
+        board = [
+          [1,2,1,2,1,2,1],
+          [1,2,1,2,1,2,1],
+          [2,1,2,1,2,1,2],
+          [2,1,2,1,2,1,2],
+          [1,2,1,2,1,2,1],
+          [1,2,1,2,1,2,1]
+        ]
+        game.instance_variable_set(:@board, board)
 
-    #     expect(game.draw?).to be_truthy
-    #   end
+        expect(game.draw?).to be_truthy
+      end
 
-    #   it 'returns false for a won game' do
-    #     game = ConnectFour.new
-    #     board = ["X", "O", "X", "O", "X", "X", "O", "O", "X"]
-    #     game.instance_variable_set(:@board, board)
+      it 'returns false for a won game' do
+        game = ConnectFour.new
+        board = [
+          [1,2,1,2,1,2,1],
+          [1,2,1,1,2,2,1],
+          [1,2,1,1,2,2,1],
+          [2,1,2,2,1,1,2],
+          [1,2,1,1,2,2,1],
+          [1,2,1,1,2,2,1]
+        ]
+        game.instance_variable_set(:@board, board)
 
-    #     expect(game.draw?).to be_falsey
-    #   end
+        expect(game.draw?).to be_falsey
+      end
 
-    #   it 'returns false for an in-progress game' do
-    #     game = ConnectFour.new
-    #     board = ["X", " ", "X", " ", "X", " ", "O", "O", "X"]
-    #     game.instance_variable_set(:@board, board)
+      it 'returns false for an in-progress game' do
+        game = ConnectFour.new
+        board = [
+          [1,0,1,0,0,0,1],
+          [1,2,1,1,2,2,1],
+          [1,2,1,1,2,2,1],
+          [2,1,2,2,1,1,2],
+          [1,2,1,1,2,2,1],
+          [1,2,1,1,2,2,1]
+        ]
+        game.instance_variable_set(:@board, board)
 
-    #     expect(game.draw?).to be_falsey
-    #   end
-    # end
+        expect(game.draw?).to be_falsey
+      end
+    end
 
     # describe '#over?' do
     #   it 'returns true for a draw' do
