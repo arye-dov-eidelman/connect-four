@@ -228,7 +228,7 @@ describe './lib/connect_four.rb' do
     end
 
     describe '#current_player' do
-      it 'returns the correct player, 1, for the third move' do
+      it 'returns the correct player, 2, for the third move' do
         game = ConnectFour.new
         board = [
           [0,0,0,0,0,0,0], 
@@ -243,7 +243,7 @@ describe './lib/connect_four.rb' do
         expect(game.current_player).to eq(2)
       end
 
-      it 'returns the correct player, 2, for the fourth move' do
+      it 'returns the correct player, 1, for the fourth move' do
         game = ConnectFour.new
         board = [
           [0,0,0,0,0,0,0], 
@@ -259,47 +259,54 @@ describe './lib/connect_four.rb' do
       end
     end
 
-    # describe '#turn' do
-    #   let(:game) { ConnectFour.new }
+    describe '#turn' do
+      let(:game) { ConnectFour.new }
 
-    #   it 'receives user input via the gets method' do
-    #     allow($stdout).to receive(:puts)
-    #     expect(game).to receive(:gets).and_return("1")
+      it 'receives user input via the gets method' do
+        allow($stdout).to receive(:puts)
+        expect(game).to receive(:gets).and_return("1")
 
-    #     game.turn
-    #   end
+        game.turn
+      end
 
-    #   it "calls #input_to_index, #valid_move?, and #current_player" do
-    #     allow($stdout).to receive(:puts)
-    #     expect(game).to receive(:gets).and_return("5")
-    #     expect(game).to receive(:input_to_index).and_return(4)
-    #     expect(game).to receive(:valid_move?).and_return(true)
-    #     expect(game).to receive(:current_player).and_return("X")
+      it "calls #input_to_index, #valid_move?, and #current_player" do
+        allow($stdout).to receive(:puts)
+        expect(game).to receive(:gets).and_return("5")
+        expect(game).to receive(:input_to_index).and_return(4)
+        expect(game).to receive(:valid_move?).and_return(true)
+        expect(game).to receive(:current_player).and_return(1)
 
-    #     game.turn
-    #   end
+        game.turn
+      end
 
-    #   it 'makes valid moves and displays the board' do
-    #     allow($stdout).to receive(:puts)
-    #     expect(game).to receive(:gets).and_return("1")
-    #     expect(game).to receive(:display_board)
+      it 'makes valid moves and displays the board' do
+        allow($stdout).to receive(:puts)
+        expect(game).to receive(:gets).and_return("1")
+        expect(game).to receive(:display_board)
 
-    #     game.turn
+        game.turn
 
-    #     board = game.instance_variable_get(:@board)
-    #     expect(board).to eq(["X", " ", " ", " ", " ", " ", " ", " ", " "])
-    #   end
+        board = game.instance_variable_get(:@board)
+        expect(board).to eq([
+          [0,0,0,0,0,0,0], 
+          [0,0,0,0,0,0,0], 
+          [0,0,0,0,0,0,0], 
+          [0,0,0,0,0,0,0], 
+          [0,0,0,0,0,0,0], 
+          [1,0,0,0,0,0,0]
+        ])
+      end
 
-    #   it 'asks for input again after a failed validation' do
-    #     game = ConnectFour.new
-    #     allow($stdout).to receive(:puts)
+      it 'asks for input again after a failed validation' do
+        game = ConnectFour.new
+        allow($stdout).to receive(:puts)
 
-    #     expect(game).to receive(:gets).and_return("invalid")
-    #     expect(game).to receive(:gets).and_return("1")
+        expect(game).to receive(:gets).and_return("invalid")
+        expect(game).to receive(:gets).and_return("1")
 
-    #     game.turn
-    #   end
-    # end
+        game.turn
+      end
+    end
 
     # describe "#won?" do
     #   it 'returns false for a draw' do
