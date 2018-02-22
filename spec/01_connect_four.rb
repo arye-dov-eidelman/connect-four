@@ -326,23 +326,37 @@ describe './lib/connect_four.rb' do
     #   end
     # end
 
-    # describe '#full?' do
-    #   it 'returns true for a draw' do
-    #     game = ConnectFour.new
-    #     board = ["X", "O", "X", "O", "X", "X", "O", "X", "O"]
-    #     game.instance_variable_set(:@board, board)
+    describe '#full?' do
+      it 'returns true for a draw' do
+        game = ConnectFour.new
+        board = [
+          [1,2,1,1,2,2,1], 
+          [1,2,1,1,2,2,1],
+          [1,2,1,1,2,2,1],
+          [2,1,2,2,1,1,2],
+          [1,2,1,1,2,2,1],
+          [1,2,1,1,2,2,1]
+        ]
+        game.instance_variable_set(:@board, board)
 
-    #     expect(game.full?).to be_truthy
-    #   end
+        expect(game.full?).to be_truthy
+      end
 
-    #   it 'returns false for an in-progress game' do
-    #     game = ConnectFour.new
-    #     board = ["X", " ", "X", " ", "X", " ", "O", "O", " "]
-    #     game.instance_variable_set(:@board, board)
+      it 'returns false for an in-progress game' do
+        game = ConnectFour.new
+        board = [
+          [1,0,1,0,0,0,1], 
+          [1,2,1,1,2,2,1],
+          [1,2,1,1,2,2,1],
+          [2,1,2,2,1,1,2],
+          [1,2,1,1,2,2,1],
+          [1,2,1,1,2,2,1]
+        ]
+        game.instance_variable_set(:@board, board)
 
-    #     expect(game.full?).to be_falsey
-    #   end
-    # end
+        expect(game.full?).to be_falsey
+      end
+    end
 
     # describe '#draw?' do
     #   it 'returns true for a draw' do

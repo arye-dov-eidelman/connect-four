@@ -101,12 +101,12 @@ class ConnectFour
     return false
   end
   def full?
-    # @board.each do |position|
-    #   if position == " "
+    @board[0].each do |cell|
+      if @board[0][cell] == 0
         return false
-    #   end
-    # end
-    # return true
+      end
+    end
+    return true
   end
   def draw?
     if full? && !won?
